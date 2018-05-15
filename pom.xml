@@ -6,19 +6,18 @@
   <name>PMK-SpongeUtils</name>
   
   	<repositories>
-    	<repository>
-        	<id>sponge</id>
-        	<url>https://repo.spongepowered.org/maven</url>
-    	</repository>
-	</repositories>
+    <repository>
+        <id>sponge</id>
+        <url>https://repo.spongepowered.org/maven</url>
+    </repository>
+</repositories>
 
-	<dependencies>
-    	<dependency>
-        	<groupId>org.spongepowered</groupId>
-        	<artifactId>spongeapi</artifactId>
-        	<version>7.0.0</version>
-        	<scope>provided</scope>
-    	</dependency>
-	</dependencies>
+<dependencies>
+    <dependency>
+        <groupId>org.spongepowered</groupId>
+        <artifactId>spongeapi</artifactId>
+        <version>7.0.0</version>
+    </dependency>
+</dependencies>
   
 </project>
