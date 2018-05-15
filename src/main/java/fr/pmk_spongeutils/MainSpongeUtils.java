@@ -1,24 +1,57 @@
 package fr.pmk_spongeutils;
 
+import java.nio.file.Path;
+import java.util.Optional;
 import java.util.logging.Logger;
 
+import org.spongepowered.api.Sponge;
+import org.spongepowered.api.command.args.GenericArguments;
+import org.spongepowered.api.command.spec.CommandSpec;
+import org.spongepowered.api.config.DefaultConfig;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePostInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartingServerEvent;
 import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.service.ProviderRegistration;
+import org.spongepowered.api.text.Text;
 
 import com.google.inject.Inject;
+
+import fr.pmk_spongeutils.buy.commands.PmkBuyChunkCommand;
+import fr.pmk_spongeutils.buy.commands.PmkBuyGradeCommand;
+import fr.pmk_spongeutils.buy.commands.PmkClearCommand;
+import me.lucko.luckperms.api.LuckPermsApi;
+import ninja.leaping.configurate.commented.CommentedConfigurationNode;
+import ninja.leaping.configurate.loader.ConfigurationLoader;
 
 @Plugin(id = "pmk-spongeutils", name = "PMK-SpongeUtils", version = "1.0")
 public class MainSpongeUtils {
 
+	private static LuckPermsApi luckAPI;
+	
+	public static LuckPermsApi getLuckPermsAPI() {
+		return luckAPI;
+	}
+	
 	@Inject
 	private Logger logger;
 	
+	@Inject
+	@DefaultConfig(sharedRoot = true)
+	private Path defaultConfig;
+
+	@Inject
+	@DefaultConfig(sharedRoot = true)
+	private ConfigurationLoader<CommentedConfigurationNode> configManager;
+	
 	public Logger getLogger() {
 		return this.logger;
+	}
+	
+	public Path getDefaultPathConfig() {
+		return defaultConfig;
 	}
 	
 	@Listener
@@ -52,7 +85,39 @@ public class MainSpongeUtils {
 	@Listener
 	public void onStartServer(GameStartingServerEvent event) {
 		
+		// Récupération de l'api luckperms
+		Optional<ProviderRegistration<LuckPermsApi>> provider = Sponge.getServiceManager().getRegistration(LuckPermsApi.class);
+		if (provider.isPresent()) {
+		    luckAPI = provider.get().getProvider();
+		    
+		}
 		
+		CommandSpec buyClearCommand = CommandSpec.builder()
+			    .permission("pmkbuy.command")
+			    .executor(new PmkClearCommand())
+			    .arguments(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))))
+			    .build();
+		
+		Sponge.getCommandManager().register(this, buyClearCommand, "pmkbuyclear");	// ajout de la commande au serveur
+		
+		// commande de boutique achat de chunk
+		CommandSpec buyChunkCommand = CommandSpec.builder()
+			    .permission("pmkbuy.command")
+			    .executor(new PmkBuyChunkCommand())
+			    .arguments(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))),
+			    			GenericArguments.onlyOne(GenericArguments.integer(Text.of("chunk_number"))))
+			    .build();
+		
+		Sponge.getCommandManager().register(this, buyChunkCommand, "pmkbuychunk");	// ajout de la commande au serveur
+		
+		CommandSpec buyGradeCommand = CommandSpec.builder()
+			    .permission("pmkbuy.command")
+			    .executor(new PmkBuyGradeCommand())
+			    .arguments(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))),
+			    			GenericArguments.onlyOne(GenericArguments.string(Text.of("gradeCode"))))
+			    .build();
+		
+		Sponge.getCommandManager().register(this, buyGradeCommand, "pmkbuygrade");	// ajout de la commande au serveur
 		
 	}
 
