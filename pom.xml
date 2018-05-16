@@ -17,15 +17,6 @@
     </repository>
 </repositories>
 
-<<<<<<< HEAD
-<dependencies>
-    <dependency>
-        <groupId>org.spongepowered</groupId>
-        <artifactId>spongeapi</artifactId>
-        <version>7.0.0</version>
-    </dependency>
-</dependencies>
-=======
 	<dependencies>
     	<dependency>
         	<groupId>org.spongepowered</groupId>
@@ -40,7 +31,5 @@
         	<version>4.1</version>
         	<scope>provided</scope>
     	</dependency>    	
-	</dependencies>
->>>>>>> branch 'master' of https://github.com/PumpMyKins/PMK-SpongeUtils.git
-  
+	</dependencies>  
 </project>

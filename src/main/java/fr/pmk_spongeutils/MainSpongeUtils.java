@@ -22,6 +22,7 @@ import com.google.inject.Inject;
 import fr.pmk_spongeutils.buy.commands.PmkBuyChunkCommand;
 import fr.pmk_spongeutils.buy.commands.PmkBuyGradeCommand;
 import fr.pmk_spongeutils.buy.commands.PmkClearCommand;
+import fr.pmk_spongeutils.scheduler.ScheduleFTB;
 import me.lucko.luckperms.api.LuckPermsApi;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
@@ -54,9 +55,11 @@ public class MainSpongeUtils {
 		return defaultConfig;
 	}
 	
+	private static MainSpongeUtils instance;
+	
 	@Listener
     public void onPreInit(GamePreInitializationEvent  event) {
-        
+        instance = this;
 		/*L’événement GamePreInitializationEvent est levé. Durant cet état, le plugin se prépare à l’initialisation. 
 		 * Les accès à l’instance du logger par défaut et aux informations concernant les localisations de fichiers de configurations préférées 
 		 * sont disponibles.
@@ -119,6 +122,13 @@ public class MainSpongeUtils {
 		
 		Sponge.getCommandManager().register(this, buyGradeCommand, "pmkbuygrade");	// ajout de la commande au serveur
 		
+		new ScheduleFTB().start();
+		
+	}
+
+	public static MainSpongeUtils getInstace() {
+		// TODO Auto-generated method stub
+		return instance;
 	}
 
 }
