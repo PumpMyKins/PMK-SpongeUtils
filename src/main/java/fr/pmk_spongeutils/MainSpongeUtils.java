@@ -23,7 +23,9 @@ import fr.pmk_spongeutils.buy.commands.PmkBuyChunkCommand;
 import fr.pmk_spongeutils.buy.commands.PmkBuyGradeCommand;
 import fr.pmk_spongeutils.buy.commands.PmkClearCommand;
 import fr.pmk_spongeutils.scheduler.AntiLagsScheduler;
+import fr.pmk_spongeutils.scheduler.BuyCraftScheduler;
 import fr.pmk_spongeutils.scheduler.ScheduleFTB;
+import fr.pmk_spongeutils.xpbonus.XpBonusListener;
 import me.lucko.luckperms.api.LuckPermsApi;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
@@ -74,6 +76,9 @@ public class MainSpongeUtils {
 		/*L’événement GameInitializationEvent est levé. Durant cet état, le plugin devrait avoir finit tout ce qu’il avait à faire afin de fonctionner. 
 		 * Les gestionnaires d’événements sont traités à ce moment là.
 		 */
+		
+		// ajout de la class de listener XP
+		Sponge.getEventManager().registerListeners(this, new XpBonusListener());
 		
 	}
 	
@@ -129,6 +134,9 @@ public class MainSpongeUtils {
 		new AntiLagsScheduler().startPreventFirst();
 		new AntiLagsScheduler().startPreventSecond();
 		new AntiLagsScheduler().startClear();
+		
+		// start scheduler buycraft
+		new BuyCraftScheduler().start();
 		
 	}
 
