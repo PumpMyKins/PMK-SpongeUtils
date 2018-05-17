@@ -78,7 +78,7 @@ public class AntiLagsScheduler {
 		    	
 		    	Game game = Sponge.getGame();
 		    	
-		    	game.getServer().getBroadcastChannel().send(Text.builder("[WARNING] Anti-lags : clear des entités dans 60 secondes").color(TextColors.RED).toText());
+		    	game.getServer().getBroadcastChannel().send(Text.builder("[WARNING] Anti-lags : clear des entités dans 20 secondes").color(TextColors.RED).toText());
 		    	
 			}
 		}			
