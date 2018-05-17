@@ -40,8 +40,6 @@ public class PmkBuyGradeCommand implements CommandExecutor {
 			chunkCode = "";
 		}
 		
-		Task.Builder taskBuilder = Task.builder();
-		
 		if(gradeCode.equalsIgnoreCase("+vip+")) {
 			
 			game.getCommandManager().process(game.getServer().getConsole(), "ranks set " + player.getName() + " p" + chunkCode + "l2");			

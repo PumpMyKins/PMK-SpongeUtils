@@ -22,6 +22,7 @@ import com.google.inject.Inject;
 import fr.pmk_spongeutils.buy.commands.PmkBuyChunkCommand;
 import fr.pmk_spongeutils.buy.commands.PmkBuyGradeCommand;
 import fr.pmk_spongeutils.buy.commands.PmkClearCommand;
+import fr.pmk_spongeutils.scheduler.AntiLagsScheduler;
 import fr.pmk_spongeutils.scheduler.ScheduleFTB;
 import me.lucko.luckperms.api.LuckPermsApi;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
@@ -122,7 +123,12 @@ public class MainSpongeUtils {
 		
 		Sponge.getCommandManager().register(this, buyGradeCommand, "pmkbuygrade");	// ajout de la commande au serveur
 		
-		new ScheduleFTB().start();
+		new ScheduleFTB().start();	// auto sync ftb
+		
+		// init scheduler anti lag
+		new AntiLagsScheduler().startPreventFirst();
+		new AntiLagsScheduler().startPreventSecond();
+		new AntiLagsScheduler().startClear();
 		
 	}
 
