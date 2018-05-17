@@ -21,7 +21,7 @@ public class ScheduleFTB {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				System.out.println("task");
+				System.out.println("Actualisation FTB Utilities");
 		    	
 		    	Game game = Sponge.getGame();
 		    	game.getCommandManager().process(game.getServer().getConsole(), "ftb reload");
