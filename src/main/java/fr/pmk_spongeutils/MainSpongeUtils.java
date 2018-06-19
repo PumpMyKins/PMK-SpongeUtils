@@ -22,6 +22,7 @@ import com.google.inject.Inject;
 import fr.pmk_spongeutils.buy.commands.PmkBuyChunkCommand;
 import fr.pmk_spongeutils.buy.commands.PmkBuyGradeCommand;
 import fr.pmk_spongeutils.buy.commands.PmkClearCommand;
+import fr.pmk_spongeutils.commands.StewCommand;
 import fr.pmk_spongeutils.scheduler.AntiLagsScheduler;
 import fr.pmk_spongeutils.scheduler.BuyCraftScheduler;
 import fr.pmk_spongeutils.scheduler.ScheduleFTB;
@@ -127,6 +128,12 @@ public class MainSpongeUtils {
 			    .build();
 		
 		Sponge.getCommandManager().register(this, buyGradeCommand, "pmkbuygrade");	// ajout de la commande au serveur
+		
+		CommandSpec stewCommand = CommandSpec.builder()
+				.executor(new StewCommand())
+				.build();
+		
+		Sponge.getCommandManager().register(this, stewCommand, "stew");
 		
 		new ScheduleFTB().start();	// auto sync ftb
 		
